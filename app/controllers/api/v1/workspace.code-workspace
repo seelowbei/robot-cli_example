@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"name": ".circleci",
+			"path": "../../../../../yubi-api/.circleci"
+		},
+		{
+			"name": "rails-template",
+			"path": "../../../.."
+		}
+	],
+	"settings": {}
+}
