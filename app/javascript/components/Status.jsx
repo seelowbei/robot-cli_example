@@ -1,14 +1,27 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect } from "react";
+import useAPI from "../utils/useAPI"
 
-export default () => (
-  <div className="vw-100 vh-100 primary-color d-flex align-items-center justify-content-center">
-    <div className="jumbotron jumbotron-fluid bg-transparent">
-      <div className="container secondary-color">
-        <h1 className="display-4">Status</h1>
+export default () => {
+  const [{ data, loading, error }, refetch] = useAPI('/status')
 
+  useEffect(() => {
+    const refreshInterval = setInterval(() => refetch(), 10000)
+    return () => clearInterval(refreshInterval)
+  }, [])
 
+  return ((
+    <div className="vw-100 vh-100 primary-color d-flex align-items-center justify-content-center">
+      <div className="jumbotron jumbotron-fluid bg-transparent">
+        <div className="container secondary-color">
+          <h1 className="display-4">Status</h1>
+          {loading && <p>Loading...</p>}
+          {error && <p>Error!</p>}
+          {data && <h3
+            className={`text-center ${data.status === 'ok' ? 'text-success' : 'text-danger'}`}>
+            {data.status}
+          </h3>}
+        </div>
       </div>
     </div>
-  </div>
-);
+  ))
+};
